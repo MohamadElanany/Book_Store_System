@@ -1,33 +1,34 @@
 package Classes;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.Year;
+import java.util.*;
 
 public class Bookstore {
 
     private final Map<String, Book> inventory = new HashMap<>();
-    private final int currentYear = 2025;
 
     public void addBook(Book book) {
-        inventory.put(book.getISBN(), book);
-        System.out.println("Quantum book store: Added book '" + book.getTitle() + "' (ISBN: " + book.getISBN() + ")");
+
+        if (inventory.containsKey(book.getISBN())
+                && book instanceof Paper_Book) {
+            Paper_Book existing = (Paper_Book) inventory.get(book.getISBN());
+            existing.setStock(((Paper_Book) book).getStock());
+            System.out.println("Restocked PAPER book: " + book.getTitle());
+        } else {
+            inventory.put(book.getISBN(), book);
+            System.out.println("Added book: " + book.getTitle());
+        }
     }
 
-    public List<Book> removeOutdatedBooks(int years) {
+    public List<Book> removeOutdatedBooks(int year) {
+        int currentYear = Year.now().getValue();
         List<Book> removed = new ArrayList<>();
-        List<String> toRemove = new ArrayList<>();
-
-        for (Book book : inventory.values()) {
-            if (currentYear - book.getYear() > years) {
-                toRemove.add(book.getISBN());
-                removed.add(book);
+        for (Iterator<Book> it = inventory.values().iterator(); it.hasNext(); ) {
+            Book b = it.next();
+            if (currentYear - b.getYear() > year) {
+                removed.add(b);
+                it.remove();
+                System.out.println("Removed outdated ISBN: " + b.getISBN());
             }
-        }
-
-        for (String isbn : toRemove) {
-            inventory.remove(isbn);
-            System.out.println("Quantum book store: Removed outdated book ISBN " + isbn);
         }
         return removed;
     }

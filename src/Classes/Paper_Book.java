@@ -4,8 +4,8 @@ public class Paper_Book extends Book {
 
     private int stock;
 
-    public Paper_Book(String isbn, String title, String author, int year, double price, int stock) {
-        super(isbn, title, year, price, author);
+    public Paper_Book(String isbn, String title, String author, int year, double price, int stock ) {
+        super(isbn, title, year, price, author,Type.PAPER);
         this.stock = stock;
     }
     @Override
@@ -23,5 +23,11 @@ public class Paper_Book extends Book {
     }
 
     public int getStock() { return stock; }
-    public void setStock(int stock) { this.stock = stock; }
+    public void setStock(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException(
+                    "Restock amount must be > 0");
+        }
+        this.stock += amount;
+    }
 }

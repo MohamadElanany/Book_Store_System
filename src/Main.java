@@ -12,7 +12,7 @@ public class Main {
 
         // Add books to inventory
         store.addBook(new Paper_Book("123", "Java Basics", "John Doe", 2020, 29.99, 10));
-        store.addBook(new EBook("456", "Advanced Java", "Jane Smith", 2023, 19.99, "PDF"));
+        store.addBook(new EBook("456", "Advanced Java", "Jane Smith", 2023, 19.99));
         store.addBook(new ShowcaseBook("789", "Future Java", "AI Author", 2030, 0.0));
 
         // Test purchasing

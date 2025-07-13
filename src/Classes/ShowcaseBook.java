@@ -3,7 +3,7 @@ package Classes;
 public class ShowcaseBook extends Book {
 
     public ShowcaseBook(String isbn, String title, String author, int year, double price) {
-        super(isbn, title, year, price, author);
+        super(isbn, title, year, price, author,Type.SHOWCASE);
     }
 
     @Override
